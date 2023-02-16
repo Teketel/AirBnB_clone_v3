@@ -154,7 +154,7 @@ EOF  all  create  destroy  help  quit  show  update
 No known bugs at this time. 
 
 ## Authors
-Teketel - [Github](https://github.com/Teketeel) / [Twitter](https://twitter.com/tekesawo)  
+Teketel - [Github](https://github.com/Teketel) / [Twitter](https://twitter.com/tekesawo)  
 Pelumi Adesokan - [Github](https://github.com/PelumiAdesokan) / [Twitter](https://twitter.com/PelumiAdesokan)
 
 ## License
