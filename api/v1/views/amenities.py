@@ -16,7 +16,7 @@ def amenities_no_id(amenity_id=None):
     """
     if request.method == 'GET':
         all_amenities = storage.all('Amenity')
-        all_amenities = [obj.to_json() for obj in all_amenities.values()]
+        all_amenities = [obj.to_dict() for obj in all_amenities.values()]
         return jsonify(all_amenities)
 
     if request.method == 'POST':
@@ -28,7 +28,7 @@ def amenities_no_id(amenity_id=None):
         Amenity = classes.get('Amenity')
         new_object = Amenity(**req_json)
         new_object.save()
-        return jsonify(new_object.to_json()), 201
+        return jsonify(new_object.to_dict()), 201
 
 
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'])
@@ -42,7 +42,7 @@ def amenities_with_id(amenity_id=None):
         abort(404, 'Not found')
 
     if request.method == 'GET':
-        return jsonify(amenity_obj.to_json())
+        return jsonify(amenity_obj.to_dict())
 
     if request.method == 'DELETE':
         amenity_obj.delete()
@@ -54,4 +54,4 @@ def amenities_with_id(amenity_id=None):
         if req_json is None:
             abort(400, 'Not a JSON')
         amenity_obj.bm_update(req_json)
-        return jsonify(amenity_obj.to_json()), 200
+        return jsonify(amenity_obj.to_dict()), 200

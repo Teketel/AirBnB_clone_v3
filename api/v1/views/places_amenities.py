@@ -28,7 +28,7 @@ def amenities_per_place(place_id=None):
             for amen in place_amen_ids:
                 response.append(storage.get('Amenity', amen))
         place_amenities = [
-            obj.to_json() for obj in place_amenities
+            obj.to_dict() for obj in place_amenities
             ]
         return jsonify(place_amenities)
 
@@ -60,9 +60,9 @@ def amenity_to_place(place_id=None, amenity_id=None):
     if request.method == 'POST':
         if (amenity_obj in place_obj.amenities or
                 amenity_obj.id in place_obj.amenities):
-            return jsonify(amenity_obj.to_json()), 200
+            return jsonify(amenity_obj.to_dict()), 200
         if STORAGE_TYPE == 'db':
             place_obj.amenities.append(amenity_obj)
         else:
             place_obj.amenities = amenity_obj
-        return jsonify(amenity_obj.to_json()), 201
+        return jsonify(amenity_obj.to_dict()), 201

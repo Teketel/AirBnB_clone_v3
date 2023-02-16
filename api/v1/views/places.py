@@ -22,7 +22,7 @@ def places_per_city(city_id=None):
 
     if request.method == 'GET':
         all_places = storage.all('Place')
-        city_places = [obj.to_json() for obj in all_places.values()
+        city_places = [obj.to_dict() for obj in all_places.values()
                        if obj.city_id == city_id]
         return jsonify(city_places)
 
@@ -42,7 +42,7 @@ def places_per_city(city_id=None):
         req_json['city_id'] = city_id
         new_object = Place(**req_json)
         new_object.save()
-        return jsonify(new_object.to_json()), 201
+        return jsonify(new_object.to_dict()), 201
 
 
 @swag_from('swagger_yaml/places_id.yml', methods=['GET', 'DELETE', 'PUT'])
@@ -56,7 +56,7 @@ def places_with_id(place_id=None):
         abort(404, 'Not found')
 
     if request.method == 'GET':
-        return jsonify(place_obj.to_json())
+        return jsonify(place_obj.to_dict())
 
     if request.method == 'DELETE':
         place_obj.delete()
@@ -68,7 +68,7 @@ def places_with_id(place_id=None):
         if req_json is None:
             abort(400, 'Not a JSON')
         place_obj.bm_update(req_json)
-        return jsonify(place_obj.to_json()), 200
+        return jsonify(place_obj.to_dict()), 200
 
 
 @app_views.route('/places_search', methods=['POST'])
@@ -96,7 +96,7 @@ def places_search():
     if len(state_cities) > 0:
         all_places = [p for p in all_places if p.city_id in state_cities]
     elif amenities is None or len(amenities) == 0:
-        result = [place.to_json() for place in all_places]
+        result = [place.to_dict() for place in all_places]
         return jsonify(result)
     places_amenities = []
     if amenities and len(amenities) > 0:
@@ -112,5 +112,5 @@ def places_search():
                 places_amenities.append(p)
     else:
         places_amenities = all_places
-    result = [place.to_json() for place in places_amenities]
+    result = [place.to_dict() for place in places_amenities]
     return jsonify(result)
